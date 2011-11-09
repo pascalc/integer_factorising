@@ -9,6 +9,7 @@ public class PollardRho {
 
     public static BigInteger f(BigInteger x, BigInteger c, BigInteger N) {
         // Implement multiplyMod?
+        //BigInteger x_mod = x.mod(N);
         return x.multiply(x).mod(N).add(c);
     }
 
@@ -51,7 +52,7 @@ public class PollardRho {
         // memoize isProbablePrime
         if (N.isProbablePrime(10)) { System.out.println(N); return; }
         
-        if (N.bitLength() > 76) { System.out.println("fail"); return; }
+        if (N.bitLength() > 75) { System.out.println("fail"); return; }
         BigInteger p = smallPrimeDivisor(N);
         BigInteger divisor = (p != ZERO) ? p : rho(N);
         
