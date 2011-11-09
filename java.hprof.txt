@@ -1,0 +1,531 @@
+JAVA PROFILE 1.0.1, created Wed Nov  9 14:10:51 2011
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+%W% %E%
+
+ Copyright (c) 2006 Sun Microsystems, Inc. All  Rights Reserved.
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=5000014f, id = 200001, name="main", group="main")
+THREAD START (obj=500002ab, id = 200004, name="Poller SunPKCS11-Darwin", group="main")
+THREAD END (id = 200001)
+THREAD START (obj=500002b6, id = 200006, name="DestroyJavaVM", group="main")
+THREAD START (obj=500002ba, id = 200007, name="Thread-0", group="main")
+THREAD END (id = 200007)
+THREAD END (id = 200006)
+TRACE 300288:
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1160)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+	PollardRho.rho(PollardRho.java:42)
+TRACE 300300:
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.f(PollardRho.java:12)
+TRACE 300271:
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:893)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+TRACE 300270:
+	java.math.BigInteger.<init>(BigInteger.java:316)
+	java.math.BigInteger.<init>(BigInteger.java:451)
+	PollardRho.smallPrimeDivisor(PollardRho.java:22)
+	PollardRho.factor(PollardRho.java:55)
+TRACE 300262:
+	java.math.BigInteger.<init>(BigInteger.java:309)
+	java.math.BigInteger.<init>(BigInteger.java:451)
+	PollardRho.smallPrimeDivisor(PollardRho.java:22)
+	PollardRho.factor(PollardRho.java:55)
+TRACE 300299:
+	java.math.MutableBigInteger.divWord(MutableBigInteger.java:1081)
+	java.math.MutableBigInteger.divideMagnitude(MutableBigInteger.java:1002)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+TRACE 300295:
+	java.lang.String.lastIndexOf(String.java:1823)
+	java.lang.String.lastIndexOf(String.java:1805)
+	java.math.BigInteger.<init>(BigInteger.java:280)
+	java.math.BigInteger.<init>(BigInteger.java:451)
+TRACE 300301:
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:41)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300280:
+	java.math.BigInteger.multiply(BigInteger.java:1143)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:40)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300303:
+	java.math.MutableBigInteger.binaryGcd(MutableBigInteger.java:1192)
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1150)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+TRACE 300289:
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300307:
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300310:
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:107)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:881)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+TRACE 300309:
+	java.lang.System.arraycopy(System.java:Unknown line)
+	java.io.BufferedOutputStream.write(BufferedOutputStream.java:111)
+	java.io.PrintStream.write(PrintStream.java:430)
+	sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:202)
+TRACE 300312:
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1162)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+	PollardRho.rho(PollardRho.java:42)
+TRACE 300293:
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:40)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300284:
+	java.math.MutableBigInteger.binaryGcd(MutableBigInteger.java:1189)
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1150)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+TRACE 300269:
+	java.util.Arrays.copyOfRange(Arrays.java:3137)
+	java.math.BigInteger.trustedStripLeadingZeroInts(BigInteger.java:2792)
+	java.math.BigInteger.multiply(BigInteger.java:1144)
+	PollardRho.f(PollardRho.java:12)
+TRACE 300274:
+	java.lang.System.currentTimeMillis(System.java:Unknown line)
+	sun.security.provider.NativePRNG$RandomIO.ensureBufferValid(NativePRNG.java:242)
+	sun.security.provider.NativePRNG$RandomIO.implNextBytes(NativePRNG.java:261)
+	sun.security.provider.NativePRNG$RandomIO.access$200(NativePRNG.java:108)
+TRACE 300298:
+	java.math.BigInteger.multiply(BigInteger.java:1143)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:41)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300279:
+	java.math.BigInteger.add(BigInteger.java:1070)
+	java.math.BigInteger.add(BigInteger.java:1023)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:40)
+TRACE 300281:
+	java.util.Arrays.copyOfRange(Arrays.java:3137)
+	java.math.BigInteger.trustedStripLeadingZeroInts(BigInteger.java:2792)
+	java.math.BigInteger.subtract(BigInteger.java:1097)
+	PollardRho.rho(PollardRho.java:42)
+TRACE 300282:
+	java.util.Arrays.copyOf(Arrays.java:2834)
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:98)
+	java.math.BigInteger.gcd(BigInteger.java:1405)
+	PollardRho.rho(PollardRho.java:42)
+TRACE 300283:
+	java.math.MutableBigInteger.divideMagnitude(MutableBigInteger.java:943)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+TRACE 300285:
+	java.lang.System.arraycopy(System.java:Unknown line)
+	java.util.Arrays.copyOf(Arrays.java:2835)
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:98)
+	java.math.BigInteger.gcd(BigInteger.java:1405)
+TRACE 300286:
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1103)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300287:
+	java.math.BigInteger.compareTo(BigInteger.java:2460)
+	PollardRho.rho(PollardRho.java:39)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300290:
+	java.math.BigInteger.add(BigInteger.java:1023)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:40)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300291:
+	PollardRho.smallPrimeDivisor(PollardRho.java:22)
+	PollardRho.factor(PollardRho.java:55)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.main(PollardRho.java:67)
+TRACE 300292:
+	PollardRho.rho(PollardRho.java:39)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300294:
+	java.math.MutableBigInteger.divideOneWord(MutableBigInteger.java:815)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:893)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+TRACE 300296:
+	java.math.BigInteger.multiply(BigInteger.java:1143)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:41)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300297:
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300302:
+	java.math.BigInteger.randomBits(BigInteger.java:475)
+	java.math.BigInteger.<init>(BigInteger.java:468)
+	java.math.BigInteger.passesMillerRabin(BigInteger.java:880)
+	java.math.BigInteger.primeToCertainty(BigInteger.java:714)
+TRACE 300304:
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:41)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300305:
+	sun.misc.Unsafe.putInt(Unsafe.java:Unknown line)
+	sun.security.provider.ByteArrayAccess.i2bBig4(ByteArrayAccess.java:307)
+	sun.security.provider.SHA.implDigest(SHA.java:84)
+	sun.security.provider.DigestBase.engineDigest(DigestBase.java:169)
+TRACE 300306:
+	java.math.BigInteger.remainder(BigInteger.java:1352)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+	PollardRho.factor(PollardRho.java:55)
+TRACE 300308:
+	java.math.BigInteger.add(BigInteger.java:1023)
+	PollardRho.f(PollardRho.java:12)
+	PollardRho.rho(PollardRho.java:41)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300311:
+	java.math.BigInteger.subtract(BigInteger.java:1095)
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300313:
+	java.io.FileInputStream.readBytes(FileInputStream.java:Unknown line)
+	java.io.FileInputStream.read(FileInputStream.java:220)
+	sun.security.provider.NativePRNG$RandomIO.readFully(NativePRNG.java:185)
+	sun.security.provider.NativePRNG$RandomIO.ensureBufferValid(NativePRNG.java:247)
+TRACE 300314:
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300315:
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+	PollardRho.factor(PollardRho.java:55)
+	PollardRho.factor(PollardRho.java:60)
+	PollardRho.factor(PollardRho.java:60)
+TRACE 300316:
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+	PollardRho.factor(PollardRho.java:55)
+TRACE 300317:
+	java.math.BigInteger.subtract(BigInteger.java:1095)
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+	PollardRho.main(PollardRho.java:67)
+TRACE 300318:
+	java.math.MutableBigInteger.toBigInteger(MutableBigInteger.java:141)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+TRACE 300095:
+	java.security.Provider$Service.addAttribute(Provider.java:1067)
+	java.security.Provider.parseLegacyPut(Provider.java:637)
+	java.security.Provider.ensureLegacyParsed(Provider.java:537)
+	java.security.Provider.getService(Provider.java:676)
+TRACE 300043:
+	java.util.jar.JarVerifier.processEntry(JarVerifier.java:261)
+	java.util.jar.JarVerifier.update(JarVerifier.java:199)
+	java.util.jar.JarFile.initializeVerifier(JarFile.java:323)
+	java.util.jar.JarFile.getInputStream(JarFile.java:388)
+TRACE 300027:
+	java.util.Arrays.copyOf(Arrays.java:2882)
+	java.lang.AbstractStringBuilder.expandCapacity(AbstractStringBuilder.java:100)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:572)
+	java.lang.StringBuilder.append(StringBuilder.java:203)
+TRACE 300118:
+	sun.security.x509.CertificateValidity.<init>(CertificateValidity.java:110)
+	sun.security.x509.X509CertInfo.parse(X509CertInfo.java:676)
+	sun.security.x509.X509CertInfo.<init>(X509CertInfo.java:152)
+	sun.security.x509.X509CertImpl.parse(X509CertImpl.java:1729)
+TRACE 300020:
+	java.util.zip.ZipFile.read(ZipFile.java:Unknown line)
+	java.util.zip.ZipFile.access$1200(ZipFile.java:31)
+	java.util.zip.ZipFile$ZipFileInputStream.read(ZipFile.java:460)
+	java.util.zip.ZipFile$1.fill(ZipFile.java:243)
+TRACE 300165:
+	sun.text.normalizer.NormalizerBase.<clinit>(NormalizerBase.java:393)
+	java.text.Normalizer.normalize(Normalizer.java:146)
+	sun.security.x509.AVA.toRFC2253CanonicalString(AVA.java:986)
+	sun.security.x509.RDN.toRFC2253StringInternal(RDN.java:430)
+TRACE 300070:
+	sun.security.util.DerInputStream.readVector(DerInputStream.java:373)
+	sun.security.util.DerInputStream.getSequence(DerInputStream.java:281)
+	sun.security.pkcs.ContentInfo.<init>(ContentInfo.java:115)
+	sun.security.pkcs.PKCS7.parse(PKCS7.java:136)
+TRACE 300234:
+	java.util.WeakHashMap.<init>(WeakHashMap.java:214)
+	sun.security.rsa.RSACore.<clinit>(RSACore.java:204)
+	sun.security.rsa.RSASignature.initCommon(RSASignature.java:102)
+	sun.security.rsa.RSASignature.engineInitVerify(RSASignature.java:78)
+TRACE 300251:
+	java.lang.ClassLoader$NativeLibrary.load(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadLibrary0(ClassLoader.java:1827)
+	java.lang.ClassLoader.loadLibrary(ClassLoader.java:1724)
+	java.lang.Runtime.loadLibrary0(Runtime.java:823)
+TRACE 300252:
+	java.util.zip.Inflater.reset(Inflater.java:Unknown line)
+	java.util.zip.Inflater.reset(Inflater.java:328)
+	java.util.zip.ZipFile.releaseInflater(ZipFile.java:289)
+	java.util.zip.ZipFile.access$000(ZipFile.java:31)
+TRACE 300192:
+	java.math.BigInteger.multiplyToLen(BigInteger.java:1215)
+	java.math.BigInteger.oddModPow(BigInteger.java:1808)
+	java.math.BigInteger.modPow(BigInteger.java:1571)
+	sun.security.provider.DSA.generateV(DSA.java:374)
+TRACE 300145:
+	sun.security.x509.AuthorityKeyIdentifierExtension.<init>(AuthorityKeyIdentifierExtension.java:155)
+	sun.reflect.NativeConstructorAccessorImpl.newInstance0(NativeConstructorAccessorImpl.java:Unknown line)
+	sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
+	sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)
+TRACE 300237:
+	java.lang.ClassLoader.compareCerts(ClassLoader.java:843)
+	java.lang.ClassLoader.checkCerts(ClassLoader.java:805)
+	java.lang.ClassLoader.preDefineClass(ClassLoader.java:487)
+	java.lang.ClassLoader.defineClassCond(ClassLoader.java:625)
+TRACE 300238:
+	sun.security.pkcs11.Config.setCompatibilityAttributes(Config.java:783)
+	sun.security.pkcs11.Config.parseAttributes(Config.java:742)
+	sun.security.pkcs11.Config.parse(Config.java:374)
+	sun.security.pkcs11.Config.<init>(Config.java:194)
+TRACE 300223:
+	java.util.jar.Attributes$Name.isValid(Attributes.java:458)
+	java.util.jar.Attributes$Name.<init>(Attributes.java:446)
+	java.util.jar.Attributes.putValue(Attributes.java:151)
+	java.util.jar.Attributes.read(Attributes.java:404)
+TRACE 300224:
+	java.util.HashMap.hash(HashMap.java:252)
+	java.util.HashMap.getEntry(HashMap.java:344)
+	java.util.LinkedHashMap.get(LinkedHashMap.java:280)
+	java.security.Provider.parseLegacyPut(Provider.java:588)
+TRACE 300212:
+	java.io.FilePermission$1.run(FilePermission.java:186)
+	java.io.FilePermission$1.run(FilePermission.java:183)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	java.io.FilePermission.init(FilePermission.java:183)
+TRACE 300260:
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:69)
+	java.math.BigInteger.remainder(BigInteger.java:1350)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+TRACE 300261:
+	java.lang.String.lastIndexOf(String.java:1823)
+	java.lang.String.lastIndexOf(String.java:1805)
+	java.math.BigInteger.<init>(BigInteger.java:280)
+	java.math.BigInteger.<init>(BigInteger.java:451)
+TRACE 300263:
+	java.math.BigInteger.<init>(BigInteger.java:307)
+	java.math.BigInteger.<init>(BigInteger.java:451)
+	PollardRho.smallPrimeDivisor(PollardRho.java:22)
+	PollardRho.factor(PollardRho.java:55)
+TRACE 300264:
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:68)
+	java.math.BigInteger.remainder(BigInteger.java:1350)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+TRACE 300265:
+	java.math.MutableBigInteger.rightShift(MutableBigInteger.java:431)
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1139)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+TRACE 300266:
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:868)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.smallPrimeDivisor(PollardRho.java:23)
+TRACE 300267:
+	java.math.MutableBigInteger.rightShift(MutableBigInteger.java:430)
+	java.math.MutableBigInteger.binaryGCD(MutableBigInteger.java:1139)
+	java.math.MutableBigInteger.hybridGCD(MutableBigInteger.java:1104)
+	java.math.BigInteger.gcd(BigInteger.java:1408)
+TRACE 300268:
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:877)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+	PollardRho.f(PollardRho.java:12)
+TRACE 300202:
+	java.lang.String.toLowerCase(String.java:2418)
+	java.security.Provider.parseLegacyPut(Provider.java:576)
+	java.security.Provider.ensureLegacyParsed(Provider.java:537)
+	java.security.Provider.getService(Provider.java:676)
+TRACE 300273:
+	java.math.MutableBigInteger.divideMagnitude(MutableBigInteger.java:979)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+	java.math.BigInteger.mod(BigInteger.java:1531)
+TRACE 300275:
+	java.math.BigInteger.subtract(BigInteger.java:1109)
+	java.math.BigInteger.subtract(BigInteger.java:1095)
+	PollardRho.rho(PollardRho.java:42)
+	PollardRho.factor(PollardRho.java:56)
+TRACE 300276:
+	java.util.Arrays.copyOf(Arrays.java:2834)
+	java.math.MutableBigInteger.<init>(MutableBigInteger.java:98)
+	java.math.BigInteger.gcd(BigInteger.java:1406)
+	PollardRho.rho(PollardRho.java:42)
+TRACE 300277:
+	java.math.MutableBigInteger.leftShift(MutableBigInteger.java:492)
+	java.math.MutableBigInteger.divideMagnitude(MutableBigInteger.java:966)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+TRACE 300278:
+	java.math.MutableBigInteger.leftShift(MutableBigInteger.java:457)
+	java.math.MutableBigInteger.divideMagnitude(MutableBigInteger.java:966)
+	java.math.MutableBigInteger.divide(MutableBigInteger.java:901)
+	java.math.BigInteger.remainder(BigInteger.java:1354)
+CPU SAMPLES BEGIN (total = 160) Wed Nov  9 14:10:52 2011
+rank   self  accum   count trace method
+   1 21.25% 21.25%      34 300288 java.math.MutableBigInteger.binaryGCD
+   2  9.38% 30.62%      15 300300 java.math.MutableBigInteger.divide
+   3  6.88% 37.50%      11 300271 java.math.MutableBigInteger.divide
+   4  3.75% 41.25%       6 300270 java.math.BigInteger.<init>
+   5  3.12% 44.38%       5 300262 java.math.BigInteger.<init>
+   6  2.50% 46.88%       4 300299 java.math.MutableBigInteger.divWord
+   7  1.88% 48.75%       3 300295 java.lang.String.lastIndexOf
+   8  1.25% 50.00%       2 300301 PollardRho.f
+   9  1.25% 51.25%       2 300280 java.math.BigInteger.multiply
+  10  1.25% 52.50%       2 300303 java.math.MutableBigInteger.binaryGcd
+  11  1.25% 53.75%       2 300289 PollardRho.rho
+  12  1.25% 55.00%       2 300307 java.math.MutableBigInteger.hybridGCD
+  13  1.25% 56.25%       2 300310 java.math.MutableBigInteger.<init>
+  14  1.25% 57.50%       2 300309 java.lang.System.arraycopy
+  15  1.25% 58.75%       2 300312 java.math.MutableBigInteger.binaryGCD
+  16  1.25% 60.00%       2 300293 PollardRho.f
+  17  1.25% 61.25%       2 300284 java.math.MutableBigInteger.binaryGcd
+  18  1.25% 62.50%       2 300269 java.util.Arrays.copyOfRange
+  19  1.25% 63.75%       2 300274 java.lang.System.currentTimeMillis
+  20  1.25% 65.00%       2 300298 java.math.BigInteger.multiply
+  21  0.62% 65.62%       1 300279 java.math.BigInteger.add
+  22  0.62% 66.25%       1 300281 java.util.Arrays.copyOfRange
+  23  0.62% 66.88%       1 300282 java.util.Arrays.copyOf
+  24  0.62% 67.50%       1 300283 java.math.MutableBigInteger.divideMagnitude
+  25  0.62% 68.12%       1 300285 java.lang.System.arraycopy
+  26  0.62% 68.75%       1 300286 java.math.MutableBigInteger.hybridGCD
+  27  0.62% 69.38%       1 300287 java.math.BigInteger.compareTo
+  28  0.62% 70.00%       1 300290 java.math.BigInteger.add
+  29  0.62% 70.62%       1 300291 PollardRho.smallPrimeDivisor
+  30  0.62% 71.25%       1 300292 PollardRho.rho
+  31  0.62% 71.88%       1 300294 java.math.MutableBigInteger.divideOneWord
+  32  0.62% 72.50%       1 300296 java.math.BigInteger.multiply
+  33  0.62% 73.12%       1 300297 PollardRho.rho
+  34  0.62% 73.75%       1 300302 java.math.BigInteger.randomBits
+  35  0.62% 74.38%       1 300304 PollardRho.f
+  36  0.62% 75.00%       1 300305 sun.misc.Unsafe.putInt
+  37  0.62% 75.62%       1 300306 java.math.BigInteger.remainder
+  38  0.62% 76.25%       1 300308 java.math.BigInteger.add
+  39  0.62% 76.88%       1 300311 java.math.BigInteger.subtract
+  40  0.62% 77.50%       1 300313 java.io.FileInputStream.readBytes
+  41  0.62% 78.12%       1 300314 PollardRho.rho
+  42  0.62% 78.75%       1 300315 PollardRho.smallPrimeDivisor
+  43  0.62% 79.38%       1 300316 java.math.BigInteger.remainder
+  44  0.62% 80.00%       1 300317 java.math.BigInteger.subtract
+  45  0.62% 80.62%       1 300318 java.math.MutableBigInteger.toBigInteger
+  46  0.62% 81.25%       1 300095 java.security.Provider$Service.addAttribute
+  47  0.62% 81.88%       1 300043 java.util.jar.JarVerifier.processEntry
+  48  0.62% 82.50%       1 300027 java.util.Arrays.copyOf
+  49  0.62% 83.12%       1 300118 sun.security.x509.CertificateValidity.<init>
+  50  0.62% 83.75%       1 300020 java.util.zip.ZipFile.read
+  51  0.62% 84.38%       1 300165 sun.text.normalizer.NormalizerBase.<clinit>
+  52  0.62% 85.00%       1 300070 sun.security.util.DerInputStream.readVector
+  53  0.62% 85.62%       1 300234 java.util.WeakHashMap.<init>
+  54  0.62% 86.25%       1 300251 java.lang.ClassLoader$NativeLibrary.load
+  55  0.62% 86.88%       1 300252 java.util.zip.Inflater.reset
+  56  0.62% 87.50%       1 300192 java.math.BigInteger.multiplyToLen
+  57  0.62% 88.12%       1 300145 sun.security.x509.AuthorityKeyIdentifierExtension.<init>
+  58  0.62% 88.75%       1 300237 java.lang.ClassLoader.compareCerts
+  59  0.62% 89.38%       1 300238 sun.security.pkcs11.Config.setCompatibilityAttributes
+  60  0.62% 90.00%       1 300223 java.util.jar.Attributes$Name.isValid
+  61  0.62% 90.62%       1 300224 java.util.HashMap.hash
+  62  0.62% 91.25%       1 300212 java.io.FilePermission$1.run
+  63  0.62% 91.88%       1 300260 java.math.MutableBigInteger.<init>
+  64  0.62% 92.50%       1 300261 java.lang.String.lastIndexOf
+  65  0.62% 93.12%       1 300263 java.math.BigInteger.<init>
+  66  0.62% 93.75%       1 300264 java.math.MutableBigInteger.<init>
+  67  0.62% 94.38%       1 300265 java.math.MutableBigInteger.rightShift
+  68  0.62% 95.00%       1 300266 java.math.MutableBigInteger.divide
+  69  0.62% 95.62%       1 300267 java.math.MutableBigInteger.rightShift
+  70  0.62% 96.25%       1 300268 java.math.MutableBigInteger.divide
+  71  0.62% 96.88%       1 300202 java.lang.String.toLowerCase
+  72  0.62% 97.50%       1 300273 java.math.MutableBigInteger.divideMagnitude
+  73  0.62% 98.12%       1 300275 java.math.BigInteger.subtract
+  74  0.62% 98.75%       1 300276 java.util.Arrays.copyOf
+  75  0.62% 99.38%       1 300277 java.math.MutableBigInteger.leftShift
+  76  0.62% 100.00%       1 300278 java.math.MutableBigInteger.leftShift
+CPU SAMPLES END
