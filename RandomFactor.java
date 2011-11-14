@@ -1,22 +1,20 @@
 import java.math.BigInteger;
+import java.security.SecureRandom;
     
-public class PollardRho {
+public class RandomFactor {
     private final static BigInteger ZERO = new BigInteger("0");
     private final static BigInteger ONE  = new BigInteger("1");
     private final static BigInteger TWO  = new BigInteger("2");
 
-    public static BigInteger f(BigInteger x) {
-        return x.multiply(x).add(ONE);
-    }
+    private final static SecureRandom random = new SecureRandom();
 
     public static BigInteger divisor(BigInteger N) {
-        BigInteger x = TWO;
-        BigInteger y = TWO;
-        BigInteger d = ONE;
+        BigInteger d = new BigInteger("1");
+        BigInteger x,y;
 
         while((d.compareTo(ONE)) == 0) {
-            x = f(x).mod(N);
-            y = f(f(y)).mod(N);
+            x = new BigInteger(N.bitLength()-1, random);
+            y = new BigInteger(N.bitLength()-1, random);
             d = x.subtract(y).gcd(N);
         }
 
@@ -28,8 +26,8 @@ public class PollardRho {
         
         if (N.isProbablePrime(10)) { System.out.println(N); return; }
         
-        if (N.bitLength() > 65) { System.out.println("fail"); return; }
-        
+        if (N.bitLength() > 55) { System.out.println("fail"); return; }
+
         BigInteger d = divisor(N);
         factor(d);
         factor(N.divide(d)); 

@@ -2,15 +2,11 @@
 
 require_relative './MillerRabin.rb'
 
-def f(x)
-  x*x + 1
-end
-
 def divisor(n)
-  x,y,d = 2,2,1
+  d = 1
   while d == 1
-    x = f(x) % n
-    y = f(f(y)) % n
+    x = rand(n)
+    y = rand(n)
 
     d = (x-y).abs.gcd(n)
   end
