@@ -29,21 +29,21 @@ public class BrentOptimised {
         BigInteger y = TWO;
         BigInteger c = ONE;
 
-        long stepsTaken = 0;
-        long stepLimit = 2;
+        BigInteger stepsTaken = ZERO;
+        BigInteger stepLimit = TWO;
 
         // check if even
         if (N.mod(TWO).compareTo(ZERO) == 0) return TWO;
 
         while(d.compareTo(ONE) == 0) {
             y = f(y,c,N);
-            stepsTaken++;
+            stepsTaken = stepsTaken.add(ONE);
 
             d = x.subtract(y).gcd(N);
 
-            if (stepsTaken == stepLimit) {
-                stepsTaken = 0;
-                stepLimit = stepLimit << 1;
+            if (stepsTaken.compareTo(stepLimit) == 0) {
+                stepsTaken = ZERO;
+                stepLimit = stepLimit.multiply(TWO);
                 x = y;
             }
         }
